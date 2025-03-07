@@ -1,0 +1,11 @@
+# SCbank - Katalon Project
+
+This is a Katalon Studio test automation project.
+
+## Installation
+
+1. **Clone the repository**  
+   Run this command:
+
+   ```sh
+   git clone https://github.com/eslamabuelez/SCbank.git
