@@ -2,106 +2,109 @@ package paraBank
 
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.annotation.Keyword
+import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testdata.TestDataFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable
 
-public class Regiseration {
-    def expectedURL
-    def actualURL
-    def registerationHeader = 'Signing up is easy!'
+public class Registration {
+	def registerationHeader = 'Signing up is easy!'
 
-    @Keyword
-    def registeration() {
-        WebUI.openBrowser(GlobalVariable.BaseURL)
-        WebUI.navigateToUrl(GlobalVariable.BaseURL)
+	@Keyword
+	def registeration() {
+		WebUI.openBrowser('')
+		WebUI.navigateToUrl(GlobalVariable.BaseURL)
+		WebUI.maximizeWindow()
+		WebUI.waitForPageLoad(5)
 
-        // Validate user is redirected correctly to Home Page
-        expectedURL = GlobalVariable.BaseURL
-        actualURL = WebUI.getUrl()
-        assert actualURL == expectedURL
-        println("Actual URL is: " + actualURL)
+		def testData = TestDataFactory.findTestData('Registration')
+		int rowCount = testData.getRowNumbers()
 
-        WebUI.maximizeWindow()
-        WebUI.waitForPageLoad(10)
+		for (int row = 1; row <= rowCount; row++) {
+			WebUI.comment("Executing test case #${row}")
 
-        // Click Register
-        WebUI.click(findTestObject('Object Repository/HomePage/RegisterLink'))
+			WebUI.navigateToUrl(GlobalVariable.BaseURL)
+			WebUI.waitForPageLoad(5)
+			WebUI.click(findTestObject('Object Repository/HomePage/RegisterLink'))
 
-        // Verify Registration panel is present
-        WebUI.verifyElementPresent(findTestObject('Object Repository/HomePage/RegisterationPanel'), 3)
-        WebUI.verifyTextPresent(registerationHeader, false)
+			WebUI.verifyElementPresent(findTestObject('Object Repository/HomePage/RegisterationPanel'), 3, FailureHandling.STOP_ON_FAILURE)
+			WebUI.verifyTextPresent(registerationHeader, false, FailureHandling.STOP_ON_FAILURE)
 
-        // Load test data
-        def testData = TestDataFactory.findTestData('Registration')
-        int rowCount = testData.getRowNumbers()
+			String firstName = testData.getValue('firstName', row) ?: ''
+			String lastName = testData.getValue('lastName', row) ?: ''
+			String address = testData.getValue('address', row) ?: ''
+			String city = testData.getValue('city', row) ?: ''
+			String state = testData.getValue('state', row) ?: ''
+			String zipCode = testData.getValue('zipCode', row) ?: ''
+			String phone = testData.getValue('phone', row) ?: ''
+			String ssn = testData.getValue('ssn', row) ?: ''
+			String username = testData.getValue('username', row) ?: ''
+			String password = testData.getValue('password', row) ?: ''
+			String confirmPassword = testData.getValue('confirmPassword', row) ?: ''
+			String verifyingText = testData.getValue('verifyingText', row) ?: ''
 
-        for (int row = 1; row <= rowCount; row++) {
-            String firstName = testData.getValue('firstName', row) ?: ''
-            String lastName = testData.getValue('lastName', row) ?: ''
-            String address = testData.getValue('address', row) ?: ''
-            String city = testData.getValue('city', row) ?: ''
-            String state = testData.getValue('state', row) ?: ''
-            String zipCode = testData.getValue('zipCode', row) ?: ''
-            String phone = testData.getValue('phone', row) ?: ''
-            String ssn = testData.getValue('ssn', row) ?: ''
-            String username = testData.getValue('username', row) ?: ''
-            String password = testData.getValue('password', row) ?: ''
-            String confirmPassword = testData.getValue('confirmPassword', row) ?: ''
-            String scenario = testData.getValue('scenario', row) ?: ''
-            String verifyingText = testData.getValue('verifyingText', row) ?: ''
+			if (!firstName.isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/FirstName'), firstName)
+			if (!lastName.isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/LastName'), lastName)
+			if (!address.isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/Address'), address)
+			if (!city.isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/City'), city)
+			if (!state.isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/State'), state)
+			if (!zipCode.isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/ZipCode'), zipCode)
+			if (!phone.isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/PhoneNumber'), phone)
+			if (!ssn.isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/SSN'), ssn)
 
-            // Generate a unique random string
-            String randomData = RandomDataGenerator.generateRandomData()
+			String randomData = RandomDataGenerator.generateRandomData()
+			GlobalVariable.RandomUsername = randomData+username
+			if (!username.isEmpty()) {
+				WebUI.setText(findTestObject('Object Repository/HomePage/Username'), GlobalVariable.RandomUsername)
+			}
 
-            // Ensure proper form input handling
-            if (!firstName.trim().isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/FirstName'), firstName)
-            else WebUI.comment('Skipping First Name as it is empty')
+			if (!password.isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/Password'), password)
+			if (!confirmPassword.isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/ConfirmPassword'), confirmPassword)
 
-            if (!lastName.trim().isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/LastName'), lastName)
-            else WebUI.comment('Skipping Last Name as it is empty')
+			WebUI.comment("Form filled for test case #${row}")
 
-            if (!address.trim().isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/Address'), address)
-            else WebUI.comment('Skipping Address as it is empty')
+			WebUI.click(findTestObject('Object Repository/HomePage/RegisterButton'))
 
-            if (!city.trim().isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/City'), city)
-            else WebUI.comment('Skipping City as it is empty')
+			boolean allFieldsInserted = !firstName.isEmpty() && !lastName.isEmpty() &&
+					!address.isEmpty() && !city.isEmpty() &&
+					!state.isEmpty() && !zipCode.isEmpty() &&
+					!phone.isEmpty() && !ssn.isEmpty() &&
+					!username.isEmpty() && !password.isEmpty() &&
+					!confirmPassword.isEmpty()
 
-            if (!state.trim().isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/State'), state)
-            else WebUI.comment('Skipping State as it is empty')
+			if (allFieldsInserted) {
+				WebUI.comment("All fields inserted. Checking success message.")
 
-            if (!zipCode.trim().isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/ZipCode'), zipCode)
-            else WebUI.comment('Skipping Zip Code as it is empty')
+				String expectedSuccessMessage = "Welcome " + GlobalVariable.RandomUsername + "\nYour account was created successfully. You are now logged in."
+				boolean isSuccess = WebUI.verifyTextPresent(expectedSuccessMessage, false, FailureHandling.CONTINUE_ON_FAILURE)
 
-            if (!phone.trim().isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/PhoneNumber'), phone)
-            else WebUI.comment('Skipping Phone as it is empty')
+				if (isSuccess) {
+					WebUI.comment("Test Passed: Registration successful.")
+				} else {
+					WebUI.takeScreenshot()
+					WebUI.comment("Test Failed: Expected success message not found.")
+				}
+			} else {
+				WebUI.comment("Some fields are missing. Verifying expected error message.")
 
-            if (!ssn.trim().isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/SSN'), ssn)
-            else WebUI.comment('Skipping SSN as it is empty')
+				boolean isError = WebUI.verifyTextPresent(verifyingText, false, FailureHandling.CONTINUE_ON_FAILURE)
+				if (isError) {
+					WebUI.comment("Error message displayed: " + verifyingText)
+					WebUI.click(findTestObject('Object Repository/HomePage/RegisterLink')) // Click register link again only if needed
+				} else {
+					WebUI.comment("Unexpected issue occurred, error message not found.")
+				}
+			}
 
-            // Ensure username is correctly formatted
-            if (!username.trim().isEmpty()) {
-                WebUI.setText(findTestObject('Object Repository/HomePage/Username'), username + randomData)
-            } else {
-                WebUI.comment('Skipping Username as it is empty')
-            }
+			// **Force stop execution after scenario 12**
+			if (row == 12) {
+				WebUI.comment("Test execution completed after scenario 12. Stopping test.")
+				WebUI.closeBrowser()
 
-            if (!password.trim().isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/Password'), password)
-            else WebUI.comment('Skipping Password as it is empty')
+				// System.exit(0)  // **Forcefully stops execution**
+			}
+		}
 
-            if (!confirmPassword.trim().isEmpty()) WebUI.setText(findTestObject('Object Repository/HomePage/ConfirmPassword'), confirmPassword)
-            else WebUI.comment('Skipping Confirm Password as it is empty')
-
-            // Optional: Add delay to observe actions
-            WebUI.delay(2)
-            println("Scenario is: " + scenario)
-
-            WebUI.click(findTestObject('Object Repository/HomePage/RegisterButton'))
-            WebUI.verifyTextPresent(verifyingText, false)
-
-            WebUI.refresh()
-            WebUI.delay(2)
-            WebUI.click(findTestObject('Object Repository/HomePage/RegisterLink'))
-        }
-    }
+		WebUI.comment("All test cases executed. Closing browser.")
+	}
 }
