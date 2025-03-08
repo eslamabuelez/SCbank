@@ -12,6 +12,11 @@
    <GlobalVariableEntity>
       <description></description>
       <initValue>''</initValue>
-      <name>generatedRandom</name>
+      <name>RandomUsername</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'Test#432!'</initValue>
+      <name>Password</name>
    </GlobalVariableEntity>
 </GlobalVariableEntities>

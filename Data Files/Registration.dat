@@ -7,11 +7,11 @@
    <containsHeaders>true</containsHeaders>
    <csvSeperator></csvSeperator>
    <dataFileGUID>b692adfa-13aa-414e-93bd-a7a868eb0914</dataFileGUID>
-   <dataSourceUrl>C:\Users\Islam-Abdelrahman\Desktop\Registeration.xlsx</dataSourceUrl>
+   <dataSourceUrl>C:\Users\Islam-Abdelrahman\Downloads\Registration Validation (2).xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>false</isInternalPath>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
-   <sheetName>Sheet1</sheetName>
+   <sheetName>Registration Validation</sheetName>
    <usingGlobalDBSetting>false</usingGlobalDBSetting>
 </DataFileEntity>
