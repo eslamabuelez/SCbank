@@ -37,8 +37,10 @@ public class Login {
 		WebUI.click(findTestObject('Object Repository/HomePage/Login/Login_Button'))
 		def expectedUrl= 'https://parabank.parasoft.com/parabank/overview.htm'
 		def actualUrl= WebUI.getUrl()
-		
+
 		assert expectedUrl==expectedUrl
 		println("User is redirected Correctly")
+		WebUI.verifyTextPresent("Accounts Overview", false)
+		WebUI.delay(4)
 	}
 }

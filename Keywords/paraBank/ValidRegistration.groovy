@@ -21,82 +21,71 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable
 
 public class ValidRegistration {
-	
+
 	String registerationHeader = 'Signing up is easy!'
-	
+
 	@Keyword
-	def registeration(String firstName,String lastName,String address,String city,String state,String zipCode,String phone,String ssn,String username,String password,String confirmPassword,String verifyingText,String scenario) 
-	
-	
-	
-	
-	
-	{
+	def registeration(String firstName,String lastName,String address,String city,String state,String zipCode,String phone,String ssn,String username,String password,String confirmPassword,String verifyingText,String scenario) {
 		WebUI.openBrowser('')
 		WebUI.navigateToUrl(GlobalVariable.BaseURL)
 		WebUI.maximizeWindow()
 		WebUI.waitForPageLoad(5)
 
-		
 
-		
 
-			WebUI.click(findTestObject('Object Repository/HomePage/RegisterLink'))
 
-			WebUI.verifyElementPresent(findTestObject('Object Repository/HomePage/RegisterationPanel'), 3, FailureHandling.STOP_ON_FAILURE)
-			WebUI.verifyTextPresent(registerationHeader, false, FailureHandling.STOP_ON_FAILURE)
 
-			
+		WebUI.click(findTestObject('Object Repository/HomePage/RegisterLink'))
 
-			 WebUI.setText(findTestObject('Object Repository/HomePage/FirstName'), firstName)
-			WebUI.setText(findTestObject('Object Repository/HomePage/LastName'), lastName)
-			 WebUI.setText(findTestObject('Object Repository/HomePage/Address'), address)
-			 WebUI.setText(findTestObject('Object Repository/HomePage/City'), city)
-			 WebUI.setText(findTestObject('Object Repository/HomePage/State'), state)
-			 WebUI.setText(findTestObject('Object Repository/HomePage/ZipCode'), zipCode)
-			 WebUI.setText(findTestObject('Object Repository/HomePage/PhoneNumber'), phone)
-			 WebUI.setText(findTestObject('Object Repository/HomePage/SSN'), ssn)
+		WebUI.verifyElementPresent(findTestObject('Object Repository/HomePage/RegisterationPanel'), 3, FailureHandling.STOP_ON_FAILURE)
+		WebUI.verifyTextPresent(registerationHeader, false, FailureHandling.STOP_ON_FAILURE)
 
-			String randomData = RandomDataGenerator.generateRandomData()
-			GlobalVariable.RandomUsername = randomData+username
-			 
-				WebUI.setText(findTestObject('Object Repository/HomePage/Username'), GlobalVariable.RandomUsername)
-			
 
-			WebUI.setText(findTestObject('Object Repository/HomePage/Password'), password)
-			 WebUI.setText(findTestObject('Object Repository/HomePage/ConfirmPassword'), confirmPassword)
 
-			
+		WebUI.setText(findTestObject('Object Repository/HomePage/FirstName'), firstName)
+		WebUI.setText(findTestObject('Object Repository/HomePage/LastName'), lastName)
+		WebUI.setText(findTestObject('Object Repository/HomePage/Address'), address)
+		WebUI.setText(findTestObject('Object Repository/HomePage/City'), city)
+		WebUI.setText(findTestObject('Object Repository/HomePage/State'), state)
+		WebUI.setText(findTestObject('Object Repository/HomePage/ZipCode'), zipCode)
+		WebUI.setText(findTestObject('Object Repository/HomePage/PhoneNumber'), phone)
+		WebUI.setText(findTestObject('Object Repository/HomePage/SSN'), ssn)
 
-			WebUI.click(findTestObject('Object Repository/HomePage/RegisterButton'))
+		String randomData = RandomDataGenerator.generateRandomData()
+		GlobalVariable.RandomUsername = randomData+username
 
-		
+		WebUI.setText(findTestObject('Object Repository/HomePage/Username'), GlobalVariable.RandomUsername)
 
-			
-				WebUI.comment("All fields inserted. Checking success message.")
 
-				String expectedSuccessMessage = "Welcome " + GlobalVariable.RandomUsername + "\nYour account was created successfully. You are now logged in."
-				boolean isSuccess = WebUI.verifyTextPresent(expectedSuccessMessage, false, FailureHandling.CONTINUE_ON_FAILURE)
+		WebUI.setText(findTestObject('Object Repository/HomePage/Password'), password)
+		WebUI.setText(findTestObject('Object Repository/HomePage/ConfirmPassword'), confirmPassword)
 
-				if (isSuccess) {
-					WebUI.comment("Test Passed: Registration successful.")
-				} else {
-					WebUI.takeScreenshot()
-					WebUI.comment("Test Failed: Expected success message not found.")
-				}
-			
 
-			
-				WebUI.closeBrowser()
 
-				
-			
+		WebUI.click(findTestObject('Object Repository/HomePage/RegisterButton'))
+
+
+
+
+		WebUI.comment("All fields inserted. Checking success message.")
+
+		String expectedSuccessMessage = "Welcome " + GlobalVariable.RandomUsername + "\nYour account was created successfully. You are now logged in."
+		boolean isSuccess = WebUI.verifyTextPresent(expectedSuccessMessage, false, FailureHandling.CONTINUE_ON_FAILURE)
+
+		if (isSuccess) {
+			WebUI.comment("Test Passed: Registration successful.")
+		} else {
+			WebUI.takeScreenshot()
+			WebUI.comment("Test Failed: Expected success message not found.")
 		}
 
-		
+
+
+		WebUI.closeBrowser()
 	}
+}
 
 
-	
-	
+
+
 

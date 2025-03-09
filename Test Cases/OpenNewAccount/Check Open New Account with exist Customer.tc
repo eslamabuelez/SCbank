@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Check Open New Account with exist Customer</name>
+   <tag></tag>
+   <comment></comment>
+   <recordOption>OTHER</recordOption>
+   <testCaseGuid>0e640957-75be-4cfb-9d21-e9430756c399</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>f3fde5aa-eda8-4414-871b-2c3e5af3115c</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>051194a1-5639-41f2-8230-56d7b27e741e</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'S4MickTyson'</defaultValue>
+      <description></description>
+      <id>f3fde5aa-eda8-4414-871b-2c3e5af3115c</id>
+      <masked>false</masked>
+      <name>username</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>051194a1-5639-41f2-8230-56d7b27e741e</id>
+      <masked>false</masked>
+      <name>password</name>
+   </variable>
+</TestCaseEntity>
